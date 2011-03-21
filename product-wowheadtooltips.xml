@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<product productid="wowheadtooltips" active="1">
+	<title>Wowhead Tooltips</title>
+	<description>Hooks Wowhead Tooltips into your vBulletin installation, and also adds the JavaScript/CSS calls to the head portion of your forums.  Written by laric <http://support.wowhead-tooltips.com/members/6-laric></description>
+	<version>4.1</version>
+	<url>http://wowhead-tooltips.com</url>
+	<versioncheckurl />
+	<plugins>
+		<plugin active="1" executionorder="5">
+			<title>Wowhead parsing</title>
+			<hookname>bbcode_parse_complete_precache</hookname>
+			<phpcode><![CDATA[/**
+ * Wowhead Tooltips
+ */
+include_once(getcwd() . '/wowhead/parse.php');
+$text = whp_parse($text);]]></phpcode>
+		</plugin>
+		<plugin active="1" executionorder="5">
+			<title>Add header info</title>
+			<hookname>global_state_check</hookname>
+			<phpcode><![CDATA[global $template_hook; 
+$template_hook['headinclude_javascript'] .= '<script type="text/javascript" src="http://static.wowhead.com/widgets/power.js"></script>
+<script type="text/javascript" src="./wowhead/js/armory.js.php"></script>';
+$template_hook['headinclude_css'] .= '<link rel="stylesheet" type="text/css" href="wowhead/css/wowhead.css"/>
+<link rel="stylesheet" type="text/css" href="wowhead/css/armory.css"/>';]]></phpcode>
+		</plugin>
+	</plugins>
+</product>
